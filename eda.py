@@ -10,10 +10,34 @@ def grab_col_names(dataframe, cat_th=10, car_th=20):
     """
     grab_col_names for given dataframe
 
-    :param dataframe:
-    :param cat_th:
-    :param car_th:
-    :return:
+    Parameters
+    ----------
+    dataframe : pandas DataFrame
+    Dataframe that comprises categorical or numerical variables to be analysed
+    cat_th : categorical threshold
+    cat_th is given by user
+    car_th : cardinal threshold
+    car_th is given by user
+    return : return is function which is used to assing variables
+
+    Examples
+    ---------
+    import seaborn as sns
+    from dsmlbc.eda.eda import grab_col_names
+    df=sns.load_dataset("titanic)
+
+    def grab_col_names(dataframe,cat_th=10, car_th=20):
+    cat_cols=[ col for col in dataframe.columns if dataframe[col].dtypes=="object"]
+    num_cols=[ col for col in dataframe.columns if dataframe[col].dtypes!="object"]
+    num_but_cat = [col for col in dataframe.columns if dataframe[col].nunique() < cat_th and
+                   dataframe[col].dtypes != "object"]
+    cat_but_car = [col for col in dataframe.columns if dataframe[col].nunique() > car_th and
+                   dataframe[col].dtypes == "object"]
+    return cat_cols, num_cols, num_but_cat, cat_but_car
+
+
+cat_col, num_col, num_but_cat, cat_but_car = grab_col_names(df)
+
     """
 
 
